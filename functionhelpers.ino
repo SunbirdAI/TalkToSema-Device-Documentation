@@ -64,7 +64,7 @@ void serverUpload(){
       digitalWrite(gsm, HIGH);
     }
 
-    delay(6000); //give 6s to gsm to start fully
+    delay(10000); //give 6s to gsm to start fully
     SerialAT.begin(115200);
 
     #ifdef DEBUG

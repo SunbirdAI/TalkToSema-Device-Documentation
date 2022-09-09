@@ -64,7 +64,7 @@ int button_presses=1;
 
 //timing metrics
 unsigned long recStartTime = 0UL;
-unsigned long recDuration = 10000UL ;
+unsigned long recDuration = 11000UL ;
 
 int ledPin = 13;
 int btnPin = 18;
@@ -72,7 +72,7 @@ int btnPin = 18;
 void setup() {
 
   SerialMon.begin(115200);
-  delay(10);
+  delay(2000);
 
   #ifdef DEBUG
   SerialMon.println(" SETUP SEQUENCE START!");
@@ -90,6 +90,7 @@ void setup() {
   audio.CSPin = SD_ChipSelectPin;
 
   //setupTime();
+  serverUpload();
 
   #ifdef DEBUG
   SerialMon.println(" SETUP SEQUENCE DONE!");
@@ -141,16 +142,23 @@ void stopRec() {
 
     if(button_presses > 5){
      
-       serverUpload();
+       //serverUpload();
       for (int i=1; i<6; i++){
       SerialMon.print("Uploading rec");  SerialMon.println(i);
-         x = uploadWavFile(i, "60","2022-09-10T12:15" , deviceId);  
+         x = uploadWavFile(i, "60","2022-09-09T13:15" , deviceId);  
           if (x == true) {
-          SerialMon.println("PASSED: Upload ");
+          SerialMon.println("PASSED: Upload");
           //return true;
+          String xname = String(i)+".wav";
+          if (SD.exists(xname)) {
+            SD.remove(xname);
+            SerialMon.println("Deleted: "+xname);
+          }
+
+          delay(500);
         }
         else {
-          SerialMon.println("FAILED : Upload ");
+          SerialMon.println("FAILED: Upload");
         }   
       }
       button_presses = 1;  //reset btn counter   
