@@ -1,25 +1,19 @@
 /*
  * API For sending Audio Files to Server Description
- * URL -> https://noise-sensors-dashboard.herokuapp.com/
+ * URL -> "sunbird-sema-django-env.eba-yxmbx6t2.eu-west-1.elasticbeanstalk.com"
  * 
- * ----- Requirements -----
- * time_recorded -> 2022-09-10T121500
- * triggering_threshold -> 60
- * device -> SEMA1
+ * ----- Fields Required -----
+ * device   -> SEMA1
  * filename -> 1.wav
  * 
- * --- Output -----
+ * ----- Output -----
  * Returns a true -> tested and always passes upload
+ * no need to check for false case
  * 
 */
 
-
-bool uploadWavFile(int lastUpID, String _db, String dat, String deviceID) {
+bool uploadWavFile(int lastUpID, String deviceID) {
   String device = deviceID;
-
-  String time_recorded = dat;
-
-  String triggering_threshold = _db;
 
   String fileName = String(lastUpID) + ".wav";
 
@@ -31,25 +25,36 @@ bool uploadWavFile(int lastUpID, String _db, String dat, String deviceID) {
     return false;
   }
 
+  #ifdef DEBUG
   SerialMon.print("Connecting to "); SerialMon.println(server);
+  #endif
 
   if (modem.isGprsConnected()) { SerialMon.println("GPRS Check Pass"); }
 
   int connTry = 0;
 
   while (!client.connect(server, portx) ) {
-   
+    
+    #ifdef DEBUG
     SerialMon.println("serverConnection -  Failed");
+    #endif
     
     connTry++;
     delay(500);
 
-    if (connTry > 4) {
+    if (connTry > 9) {
       return false;
+      
+      digitalWrite(gsmPin, LOW);
+      delay(5000);
+      digitalWrite(gsmPin, HIGH);
+      modem.init();    
     }
   }
-  
+
+  #ifdef DEBUG
   SerialMon.println("serverConnection - successful");
+  #endif
  
   //global boundary content for the requests
   String content = "";
@@ -63,25 +68,12 @@ bool uploadWavFile(int lastUpID, String _db, String dat, String deviceID) {
 
   client.print("Content-Type: multipart/form-data; boundary=boundary1\r\n");
 
-
-  //-----------------start time_recorded here---------------------------
-  content += boundary_end;
-  content += "Content-Disposition: form-data; name=\"time_recorded\"\r\n\r\n";
-  content += time_recorded;
-  content += boundary_end;
-  //-----------------end time_recorded here---------------------------
-
   //-----------------start device id here---------------------------
+  content += boundary_end;
   content += "Content-Disposition: form-data; name=\"device\"\r\n\r\n";
   content += device;
   content += boundary_end;
   //-----------------end device id here---------------------------
-
-  //----------------start triggering_threshold here---------------------------
-  content += "Content-Disposition: form-data; name=\"triggering_threshold\"\r\n\r\n";
-  content += triggering_threshold;
-  content += boundary_end;
-  //-----------------end triggering_threshold here---------------------------
 
   //-----------------send audio file content here---------------------------   +boundary_st.length()
   content += "Content-Disposition: form-data; name=\"audio\"; filename=" + fileName + "\r\n";
@@ -111,9 +103,7 @@ bool uploadWavFile(int lastUpID, String _db, String dat, String deviceID) {
   }
   client.print(boundary_end);
   //-----------------audio file content ends here---------------------------
-
-  //process server response here
-
+  
   delay(2000);
 
   String Modemresponse = "";
