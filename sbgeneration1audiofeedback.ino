@@ -9,7 +9,8 @@
 const char apn[] = "internet";
 
 // device details
-String deviceId =  "SEMA1";
+//String deviceId =  "SEMA1";
+String deviceId =  "TESTUNIT";
 
 //uploading metrics
 bool uploadingTime = false;
@@ -61,11 +62,10 @@ int button_presses = 1;
 /*
  * timing metrics
  * 21000UL --- DEPLOYMENT
- * 2000UL  --- TESTING
+ * 5000UL  --- TESTING
 */
 unsigned long recStartTime = 0UL;
-unsigned long recDuration = 21000UL; 
-//unsigned long recDuration = 5000UL;
+unsigned long recDuration = 5000UL; 
 
 int gsmPin = 10;
 int recPin = A0;
@@ -101,8 +101,21 @@ void setup() {
    * Read last button press from eeprom address 0
    * use it to guide on audio file to record
   */
+
+  //EEPROM.update(0, 1);
+  
   button_presses = EEPROM.read(0);
-  recName = String(button_presses)+".wav";
+
+  if(button_presses > 5){
+      //reset eeprom  only uncomment when wrong value in eeprom
+      EEPROM.update(0, 1);
+      button_presses == 1;
+  }
+  else
+  {
+    //otherwise read the value and continue recording
+    recName = String(button_presses)+".wav";
+  }
   
   #ifdef DEBUG
   SerialMon.print("eeprom value: ");
@@ -163,7 +176,7 @@ void loop() {
   
   stopRec();
   timer.tick<void>();
-  
+
 }
 
 void restartDevice(){
