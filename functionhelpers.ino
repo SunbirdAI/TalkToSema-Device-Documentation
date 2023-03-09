@@ -38,3 +38,12 @@ void enableCommunication(){
       #endif
     }
 }
+
+void disableCommunication(){
+    if (digitalRead(gsmPin) == HIGH) {
+      digitalWrite(gsmPin, LOW);
+    }
+     #ifdef DEBUG
+     SerialMon.println("Modem powered off");
+     #endif  
+}
