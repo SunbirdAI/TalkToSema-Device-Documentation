@@ -17,7 +17,7 @@ RTC_DS3231 rtc;
 TinyGsm modem(SerialAT);
 TinyGsmClient client(modem);
 
-String deviceId = "TESTUNIT";
+String deviceId = "SEMA2";
 const char apn[] = "internet";
 const char server[] = "sunbird-sema-django-env.eba-yxmbx6t2.eu-west-1.elasticbeanstalk.com";
 const char resource[] = "/audio/";
@@ -28,7 +28,7 @@ bool x;
 int audiofile = 0;
 unsigned long i = 0;
 bool recmode = 0;
-String recName = "1.wav";
+String recName = "";
 int recFreq = 16000;
 volatile bool recStarted = false;
 volatile bool interrecord = false;
@@ -47,15 +47,6 @@ int CLOCK_INTERRUPT_PIN = 2;
 #define SD_ChipSelectPin 53
 
 void (*resetFunc)(void) = 0;
-
-void wakeUp()
-{
-    // Just a handler for the pin interrupt.
-    #ifdef DEBUG
-    SerialMon.println("Interrupt Executed");
-    #endif
-    interrecord = true;
-}
 
 void setup() {
 
@@ -76,6 +67,9 @@ void setup() {
       // this will adjust to the date and time at compilation
       rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   }
+
+  // enforce time adjustment on firmware reupload
+  rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   
   rtc.disable32K();
   
@@ -84,13 +78,7 @@ void setup() {
   #endif
 
   delay(200);
-  /*
-   * audio pin A0
-   * gsm pin 10
-   * led pin 13
-   * button interrupt pin 18
-  */
-  
+
   pinMode(recPin, INPUT);          
   pinMode(gsmPin, OUTPUT);
   pinMode(ledPin, OUTPUT); 
@@ -102,26 +90,14 @@ void setup() {
   rtc.writeSqwPinMode(DS3231_OFF);
   rtc.disableAlarm(2);
 
-  /*
-   * Set Upload time here every day at 9pm
-  */
-  //rtc.setAlarm1(DateTime(0, 0, 0, 21, 0, 0), DS3231_A1_Hour);
-
-  /*
-   * Set Upload time here every Thursday at 9pm
-  */
-  //rtc.setAlarm1(DateTime(2023, 3, 9, 21, 0, 0), DS3231_A1_Day);
-  
-  #ifdef DEBUG
-  SerialMon.println("Alarm Time Set!");
-  #endif
-
   digitalWrite(ledPin, LOW);
+  digitalWrite(gsmPin, LOW);
 
   /*
    * Uncomment the line below to reset eeprom value manually
+   * This is when debugging
   */
-   //  EEPROM.update(0, 1);
+//   EEPROM.update(0, 1);
    
   /*
    * Read last button press from eeprom address 0
@@ -155,16 +131,30 @@ void setup() {
   SerialMon.print("Next File: ");
   SerialMon.println(recName);
   #endif
-    
-  if (!SD.begin(SD_ChipSelectPin)) {
-    #ifdef DEBUG
-    SerialMon.println("SD card Failure");
-    #endif
-  }
-  else {
+
+  bool opencard = SD.begin(SD_ChipSelectPin);
+  delay(5000);
+  
+//  if (SD.begin(SD_ChipSelectPin)) {
+//    #ifdef DEBUG
+//    SerialMon.println("SD card Success");
+//    #endif
+//  }
+//  else {
+//    #ifdef DEBUG
+//    SerialMon.println("SD card Failure");
+//    #endif
+//  }
+
+  if(opencard == true){
     #ifdef DEBUG
     SerialMon.println("SD card Success");
     #endif
+  }
+  else{
+    #ifdef DEBUG
+    SerialMon.println("SD card Failed");
+    #endif    
   }
   
   audio.CSPin = SD_ChipSelectPin;
@@ -177,43 +167,65 @@ void setup() {
   delay(200);
   digitalWrite(ledPin, LOW);
   delay(200);
-
+  
+  //enableCommunication();
+  
   #ifdef DEBUG
   SerialMon.println("System Boot Sequence Complete");
   #endif
 
   #ifdef DEBUG
   for (int r=1; r<6; r++){
-    SerialMon.println("*");
-    delay(1000);
+    SerialMon.print("*");
+    delay(100);
   }
   #endif
-
+  
   #ifdef DEBUG
+  SerialMon.println("");
   SerialMon.println("Voice Feedback Activated");
+  SerialMon.println("");
+  SerialMon.print("Device ID: ");
+  SerialMon.println(deviceId);
   #endif
+
+ if(!rtc.setAlarm1(
+          DateTime(0, 0, 0, 21, 0, 0),
+          DS3231_A1_Hour
+  )) {
+      SerialMon.println("Error, alarm wasn't set!");
+  }else {
+      SerialMon.println("");
+      SerialMon.println("Alarm is Set!");
+  }
   
 }
 
 void loop() {
 
   /*
-   * Set Upload time here every Thursday at 9pm
+   * Set Upload times
   */
-  rtc.setAlarm1(DateTime(2023, 3, 9, 21, 0, 0), DS3231_A1_Day);
+  //rtc.setAlarm1(DateTime(2023, 3, 9, 21, 0, 0), DS3231_A1_Day);
+  //rtc.setAlarm1(DateTime(0, 0, 0, 18, 34, 0), DS3231_A1_Hour);
+  //rtc.setAlarm1(rtc.now() + TimeSpan(0, 0, 0, 10), DS3231_A1_Second); 
 
-  /*
-   * Uncomment to test alarm to trigger every 10 seconds
-  */
-  //rtc.setAlarm1(rtc.now() + TimeSpan(0, 0, 0, 10), DS3231_A1_Second); // In 10 seconds
+//  if(!rtc.setAlarm1(
+//          DateTime(0, 0, 0, 14, 57, 0),
+//          DS3231_A1_Hour
+//  )) {
+//      SerialMon.println("Error, alarm wasn't set!");
+//  }else {
+//      SerialMon.println("");
+//      SerialMon.println("Alarm is Set!");
+//  }
 
   attachInterrupt(digitalPinToInterrupt(btnPin), wakeUp, FALLING);
 
   attachInterrupt(digitalPinToInterrupt(CLOCK_INTERRUPT_PIN), onAlarm, LOW);
 
   #ifdef DEBUG
-  SerialMon.println("");
-  SerialMon.println("going to sleep!");
+  SerialMon.println("Going to Sleep!");
   #endif
 
   delay(200);
@@ -221,7 +233,7 @@ void loop() {
   LowPower.powerDown(SLEEP_FOREVER, ADC_OFF, BOD_OFF);
 
   #ifdef DEBUG
-  SerialMon.println("wake up!");
+  SerialMon.println("Device woke up!");
   #endif
 
   delay(100);
@@ -229,8 +241,9 @@ void loop() {
   if(interrecord == true)
   {
     detachInterrupt(digitalPinToInterrupt(btnPin));
+    interupload == false;
     #ifdef DEBUG
-      SerialMon.println("wake due to button!");  
+    SerialMon.println("woke due to button!");  
     #endif
     startRec();
     interrecord = false;
@@ -238,9 +251,11 @@ void loop() {
  
   if(interupload == true)
   {
+    interrecord == false;
     #ifdef DEBUG
-      SerialMon.println("wake due to rtc!");  
+    SerialMon.println("woke due to rtc!");  
     #endif
+    
 
     #ifdef DEBUG
     SerialMon.print("POST SQW : ");
@@ -262,7 +277,7 @@ void loop() {
   #ifdef DEBUG
   for(int i=0; i<6; i++){
     SerialMon.print("*");
-    delay(500);
+    delay(100);
   }
   #endif
   detachInterrupt(digitalPinToInterrupt(btnPin));
@@ -272,7 +287,8 @@ void loop() {
 /*
  * Function to Restart Unit to recover if Frozen 
 */
-void restartDevice(){
+void restartDevice()
+{
   #ifdef DEBUG
   SerialMon.println("Restarting Device --- Timer Elapsed");
   #endif
@@ -281,18 +297,20 @@ void restartDevice(){
 
 /*
  * Function to Record Sound
+ * Adjust delay value to +/- recording duration
 */
-void startRec() {
+void startRec()
+{
   digitalWrite(ledPin, HIGH);
   audio.startRecording(recName.c_str(), recFreq, recPin );
   #ifdef DEBUG
-  SerialMon.println("recording Started --- 5s");
+  SerialMon.println("recording Started");
   #endif
-  delay(5000);
+  delay(15000);
   
   audio.stopRecording( recName.c_str()) ;
   #ifdef DEBUG
-  SerialMon.println("recording Stopped --- 5s");
+  SerialMon.println("recording Stopped");
   #endif
   digitalWrite(ledPin, LOW);
 
@@ -305,10 +323,26 @@ void startRec() {
   
 }
 
-void onAlarm() {
+/*
+ * Interrupt handler for button
+*/
+void wakeUp()
+{
+    // Just a handler for the pin interrupt.
+    #ifdef DEBUG
+    SerialMon.println("Button Pressed!");
+    #endif
+    interrecord = true;
+}
+
+/*
+ * Interrupt handler for Alarm
+*/
+void onAlarm() 
+{
     detachInterrupt(digitalPinToInterrupt(CLOCK_INTERRUPT_PIN));
     #ifdef DEBUG
-    SerialMon.println("Alarm occured!");
+    SerialMon.println("Alarm Occured!");
     #endif
     interupload = true;
     #ifdef DEBUG
@@ -317,10 +351,14 @@ void onAlarm() {
     #endif
 }
 
-void checkTime(){
+/*
+ * Function to Upload Files with RTC Alarm Trigger
+*/
+void checkTime()
+{
 
       #ifdef DEBUG
-      SerialMon.println("---uploading flagged--");
+      SerialMon.println("---Uploading Started--");
       #endif
       digitalWrite(ledPin, HIGH);
       delay(200);
@@ -333,6 +371,20 @@ void checkTime(){
       digitalWrite(ledPin, HIGH);
 
       enableCommunication();
+
+      bool opennow = SD.begin(SD_ChipSelectPin);
+      delay(2000);
+      
+      if(opennow == true){
+        #ifdef DEBUG
+        SerialMon.println("SD card Success");
+        #endif
+      }
+      else{
+        #ifdef DEBUG
+        SerialMon.println("SD card Failed");
+        #endif    
+      }
      
       for (int i=1; i<button_presses; i++){
 
@@ -357,7 +409,7 @@ void checkTime(){
             #endif
           }
     
-          delay(500);
+          delay(200);
 
           if(i == (button_presses - 1)){
             
@@ -376,6 +428,10 @@ void checkTime(){
           EEPROM.update(0, button_presses);    
         }   
       }
+
+      #ifdef DEBUG
+      SerialMon.println("---Uploading Complete--");
+      #endif
 
       digitalWrite(ledPin, HIGH);
       delay(200);

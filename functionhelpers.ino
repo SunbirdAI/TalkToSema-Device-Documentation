@@ -11,7 +11,7 @@ void enableCommunication(){
     SerialAT.begin(115200);
 
     #ifdef DEBUG
-    SerialMon.println("Initializing modem...");
+    SerialMon.println("Initializing modem");
     #endif
     
     modem.init();
@@ -42,8 +42,12 @@ void enableCommunication(){
 void disableCommunication(){
     if (digitalRead(gsmPin) == HIGH) {
       digitalWrite(gsmPin, LOW);
+      delay(200);
     }
-     #ifdef DEBUG
-     SerialMon.println("Modem powered off");
-     #endif  
+    digitalWrite(gsmPin, LOW);
+    delay(200);
+    
+    #ifdef DEBUG
+    SerialMon.println("Modem powered off");
+    #endif  
 }

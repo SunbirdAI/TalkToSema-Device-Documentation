@@ -17,7 +17,9 @@ bool uploadWavFile(int lastUpID, String deviceID) {
 
   String fileName = String(lastUpID) + ".wav";
 
-  File dataFile = SD.open(fileName);
+  File dataFile = SD.open(fileName,FILE_READ);
+
+  delay(200);
 
   if (dataFile) {
   } else {
