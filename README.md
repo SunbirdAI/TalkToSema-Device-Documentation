@@ -30,8 +30,9 @@ This section documents the firmware implementation for the first-generation voic
    - Counter resets to 1  
 7. Device returns to sleep mode
 
-![Device Architecture](images/arch.png)
-*Figure: Sema Audio Feedback Device Architecture*
+
+
+<img src="images/arch.png" alt="Device Architecture" width="400" height="300">
 
 
 # Sema Audio Feedback Device Versioning and Comparison
