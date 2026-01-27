@@ -91,12 +91,17 @@ To provide a clear comparison of Sema device versions developed over time, showi
 **Cons**
 - Increased power complexity
 - Still dependent on LTE connectivity
-  
-<img src="images/v2.png" alt="Device Architecture" width="500" height="400">
-*Figure: Sema Audio Feedback Device Version 1.2.1*
 
-<img src="images/v2.1.png" alt="Device Architecture" width="500" height="400">
-*Figure: Sema Audio Feedback Device Version 1.2.2*
+<table>
+  <tr>
+    <td><img src="images/v2.png" alt="Device Architecture" width="400" height="320"></td>
+    <td><img src="images/v2.1.png" alt="Device Architecture" width="400" height="320"></td>
+  </tr>
+  <tr>
+    <td align="center"><em>Version 1.2.1</em></td>
+    <td align="center"><em>Version 1.2.2</em></td>
+  </tr>
+</table>
 
 ---
 
