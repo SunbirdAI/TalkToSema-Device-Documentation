@@ -28,7 +28,10 @@ This section documents the firmware implementation for the first-generation voic
    - LTE modem activates  
    - All 5 files are uploaded to the citizen feedback portal  
    - Counter resets to 1  
-7. Device returns to sleep mode  
+7. Device returns to sleep mode
+
+![Device Architecture](images/arch.png)
+*Figure: Sema Audio Feedback Device Architecture*
 
 
 # Sema Audio Feedback Device Versioning and Comparison
@@ -63,7 +66,7 @@ To provide a clear comparison of Sema device versions developed over time, showi
 - Limited recording duration
 - No noise suppression
 
-<img src="images/v1.jpg" alt="Version 1.0" width="400">
+![Device Version 1.0](images/v1.png)
 *Figure: Sema Audio Feedback Device Version 1.0*
 
 ---
@@ -90,11 +93,11 @@ To provide a clear comparison of Sema device versions developed over time, showi
 - Increased power complexity
 - Still dependent on LTE connectivity
   
-![Device Version 1.1](images/v2.png)
-*Figure: Sema Audio Feedback Device Version 1.0*
+![Device Version 1.2](images/v2.png)
+*Figure: Sema Audio Feedback Device Version 1.2*
 
 ![Device Version 1.2](images/v2.1png)
-*Figure: Sema Audio Feedback Device Version 1.0*
+*Figure: Sema Audio Feedback Device Version 1.2*
 
 ---
 
@@ -119,8 +122,8 @@ To provide a clear comparison of Sema device versions developed over time, showi
 - Requires manual retrieval of stored audio files
 - No real‑time monitoring
 
-![Device Version 3.0](images/v3.png)
-*Figure: Sema Audio Feedback Device Version 1.0*
+![Device Version 2.0](images/v3.png)
+*Figure: Sema Audio Feedback Device Version 2.0*
 
 ---
 
@@ -145,7 +148,7 @@ To provide a clear comparison of Sema device versions developed over time, showi
 - Increased system complexity
 
 ![Device Version 3.0](images/v4.png)
-*Figure: Sema Audio Feedback Device Version 1.0*
+*Figure: Sema Audio Feedback Device Version 3.0*
 
 ---
 
@@ -176,7 +179,9 @@ To provide a clear comparison of Sema device versions developed over time, showi
 
 **Advanced sensing and real-time monitoring:**
 - **Version 3** – Supports future ML, dashboards, and OTA updates
-
+- 
+![Packaged Device](images/assembled.png)
+*Figure: Sema Audio Feedback Device Deployed*
 ---
 
 ## Evolution Highlights
