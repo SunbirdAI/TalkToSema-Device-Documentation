@@ -63,7 +63,8 @@ To provide a clear comparison of Sema device versions developed over time, showi
 - Limited recording duration
 - No noise suppression
 
-![Device Version 1.0](images/v1.png)
+// ![Device Version 1.0](images/v1.png)
+<img src="images/version1.jpg" alt="Version 1.0" width="400">
 *Figure: Sema Audio Feedback Device Version 1.0*
 
 ---
