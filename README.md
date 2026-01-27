@@ -96,7 +96,7 @@ To provide a clear comparison of Sema device versions developed over time, showi
 ![Device Version 1.2](images/v2.png)
 *Figure: Sema Audio Feedback Device Version 1.2*
 
-![Device Version 1.2](images/v2.1png)
+![Device Version 1.2](images/v2.1.png)
 *Figure: Sema Audio Feedback Device Version 1.2*
 
 ---
@@ -179,9 +179,10 @@ To provide a clear comparison of Sema device versions developed over time, showi
 
 **Advanced sensing and real-time monitoring:**
 - **Version 3** – Supports future ML, dashboards, and OTA updates
-- 
+
 ![Packaged Device](images/assembled.png)
 *Figure: Sema Audio Feedback Device Deployed*
+
 ---
 
 ## Evolution Highlights
