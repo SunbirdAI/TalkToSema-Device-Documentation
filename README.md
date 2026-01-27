@@ -206,6 +206,15 @@ To provide a clear comparison of Sema device versions developed over time, showi
 
 ---
 
+## Circuit Schematics
+
+You can view the circuit schematics for each device version below:
+
+- [Version 1.x – Arduino Mega Pro Mini](schematics/SEMA.pdf)
+- [Version 2 – Arduino Nano](schematics/Schematic_CitizenFeedback_Sensor_2026-01-21.pdf)
+
+---
+
 **Author:** Joel T. Muhanguzi
 **Project:** Sema Audio Feedback Hardware Evolution
 
