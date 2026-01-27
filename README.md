@@ -1,17 +1,35 @@
-# Sbgeneration1audiofeedback
-Voice Feedback Device
-# libraries
-- TinyGSM
-- SPI
-- SD
-- TMRPCM
-- EEPROM
-- ARDUINO-TIMER
-# Device operation details
-- wake up on button press and record file
-- record count of 5 files
-- upload 5 files, reset counter to 1
-- Go to sleep
+## Firmware and Software Overview
+
+**Repository:** `Sbgeneration1audiofeedback`
+
+This section documents the firmware implementation for the first-generation voice feedback device, as maintained in the project GitHub repository.
+
+---
+
+### Core Libraries Used
+
+- **TinyGSM** – LTE modem communication  
+- **SPI** – Peripheral communication interface  
+- **SD** – Local SD card storage  
+- **TMRPCM** – Audio recording and playback in WAV format  
+- **EEPROM** – Persistent storage of counters and device state  
+- **ARDUINO-TIMER** – Task scheduling and low-power timing  
+
+---
+
+### Device Operation Logic
+
+1. Device remains in low-power sleep mode by default  
+2. User presses button → device wakes up  
+3. Records a voice feedback audio file (`.wav`)  
+4. Stores file on SD card  
+5. Increments file counter  
+6. When 5 files are recorded:  
+   - LTE modem activates  
+   - All 5 files are uploaded to the citizen feedback portal  
+   - Counter resets to 1  
+7. Device returns to sleep mode  
+
 
 # Sema Audio Feedback Device Versioning and Comparison
 
