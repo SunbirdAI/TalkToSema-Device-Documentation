@@ -89,6 +89,12 @@ To provide a clear comparison of Sema device versions developed over time, showi
 **Cons**
 - Increased power complexity
 - Still dependent on LTE connectivity
+  
+![Device Version 1.1](images/v2.png)
+*Figure: Sema Audio Feedback Device Version 1.0*
+
+![Device Version 1.2](images/v2.1png)
+*Figure: Sema Audio Feedback Device Version 1.0*
 
 ---
 
@@ -113,6 +119,9 @@ To provide a clear comparison of Sema device versions developed over time, showi
 - Requires manual retrieval of stored audio files
 - No real‑time monitoring
 
+![Device Version 3.0](images/v3.png)
+*Figure: Sema Audio Feedback Device Version 1.0*
+
 ---
 
 ### **Device Version 3 – Smart IoT Enabled Device**
@@ -134,6 +143,9 @@ To provide a clear comparison of Sema device versions developed over time, showi
 - Short battery life
 - Higher power consumption
 - Increased system complexity
+
+![Device Version 3.0](images/v4.png)
+*Figure: Sema Audio Feedback Device Version 1.0*
 
 ---
 
