@@ -30,10 +30,8 @@ This section documents the firmware implementation for the first-generation voic
    - Counter resets to 1  
 7. Device returns to sleep mode
 
-
-
-<img src="images/arch.png" alt="Device Architecture" width="400" height="300">
-
+<img src="images/arch.png" alt="Device Architecture" width="500" height="400">
+*Figure: Sema Audio Feedback Device Architecture*
 
 # Sema Audio Feedback Device Versioning and Comparison
 
@@ -67,7 +65,7 @@ To provide a clear comparison of Sema device versions developed over time, showi
 - Limited recording duration
 - No noise suppression
 
-![Device Version 1.0](images/v1.png)
+<img src="images/v1.png" alt="Device Architecture" width="500" height="400">
 *Figure: Sema Audio Feedback Device Version 1.0*
 
 ---
@@ -94,11 +92,11 @@ To provide a clear comparison of Sema device versions developed over time, showi
 - Increased power complexity
 - Still dependent on LTE connectivity
   
-![Device Version 1.2](images/v2.png)
-*Figure: Sema Audio Feedback Device Version 1.2*
+<img src="images/v2.png" alt="Device Architecture" width="500" height="400">
+*Figure: Sema Audio Feedback Device Version 1.2.1*
 
-![Device Version 1.2](images/v2.1.png)
-*Figure: Sema Audio Feedback Device Version 1.2*
+<img src="images/v2.1.png" alt="Device Architecture" width="500" height="400">
+*Figure: Sema Audio Feedback Device Version 1.2.2*
 
 ---
 
@@ -123,7 +121,7 @@ To provide a clear comparison of Sema device versions developed over time, showi
 - Requires manual retrieval of stored audio files
 - No real‑time monitoring
 
-![Device Version 2.0](images/v3.png)
+<img src="images/v3.png" alt="Device Architecture" width="500" height="400">
 *Figure: Sema Audio Feedback Device Version 2.0*
 
 ---
@@ -148,7 +146,7 @@ To provide a clear comparison of Sema device versions developed over time, showi
 - Higher power consumption
 - Increased system complexity
 
-![Device Version 3.0](images/v4.png)
+<img src="images/v4.png" alt="Device Architecture" width="500" height="400">
 *Figure: Sema Audio Feedback Device Version 3.0*
 
 ---
@@ -181,7 +179,7 @@ To provide a clear comparison of Sema device versions developed over time, showi
 **Advanced sensing and real-time monitoring:**
 - **Version 3** – Supports future ML, dashboards, and OTA updates
 
-![Packaged Device](images/assembled.png)
+<img src="images/assembled.png" alt="Device Architecture" width="500" height="400">
 *Figure: Sema Audio Feedback Device Deployed*
 
 ---
