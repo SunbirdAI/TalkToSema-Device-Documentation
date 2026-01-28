@@ -215,6 +215,50 @@ You can view the circuit schematics for each device version below:
 
 ---
 
+## Power Supply and Charging Architecture
+
+The Sema Audio Feedback Devices are designed with flexible power input options to support reliable deployment in both grid-connected and off-grid environments. The PCB integrates power regulation circuitry to safely manage different battery configurations and external power sources.
+
+### Battery Configurations
+
+**1. Series Battery Configuration (Higher Voltage System)**  
+- Battery configuration: Lithium cells connected in series  
+- Required charging voltage: **12.6V DC**  
+- Charging source: **12V DC adapter** or regulated solar charging system  
+- Used in device versions requiring higher system voltage for stable modem and audio operation  
+
+**2. Parallel Battery Configuration (Lower Voltage System)**  
+- Battery configuration: Lithium cells connected in parallel  
+- Required charging voltage: **5V DC**  
+- Optimized for low-power microcontroller-based devices  
+
+### Integrated Buck-Boost Regulation
+
+The PCB includes an **on-board buck-boost converter**, enabling flexible input power handling:
+
+- Accepts external input from **solar panels or DC adapters**
+- Automatically **steps down or steps up voltage** as required
+- Supports input sources ranging up to **20V maximum**
+- Ensures stable regulated output for battery charging and device operation
+
+This design allows direct connection of small solar panels without requiring external voltage regulation circuitry.
+
+### Supported Power Input Options
+
+- **Mains Power:** 12V DC regulated adapter  
+- **Solar Power:** Solar panel (≤ 20V) connected directly to onboard buck-boost circuit  
+- **Battery Power:** Internal lithium battery pack  
+
+### Deployment Power Recommendations
+
+- **Indoor / urban deployments:** Mains DC adapter  
+- **Outdoor / off-grid deployments:** Solar panel + internal battery  
+- **Portable / temporary setups:** Battery-only operation  
+
+*This power architecture enables continuous autonomous operation across diverse deployment environments while maintaining safe and efficient battery charging.*
+
+---
+
 **Author:** Joel T. Muhanguzi
 **Project:** Sema Audio Feedback Hardware Evolution
 
