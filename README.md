@@ -1,6 +1,6 @@
 ## Firmware and Software Overview
 
-**Repository:** `Sbgeneration1audiofeedback`
+**Repository:** `voice-feedback-device-documentation`
 
 This section documents the firmware implementation for the first-generation voice feedback device, as maintained in the project GitHub repository.
 
