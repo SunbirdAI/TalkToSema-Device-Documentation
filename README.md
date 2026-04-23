@@ -257,7 +257,7 @@ The PCB includes an on-board buck-boost converter that:
 | 17 | PCB | PCB board | 1 | 30,000 | 30,000 |
 | | | | | **Total (UGX)** | **382,500** |
 | | | | | **Total (USD)** | **~103.21** |
-
+> **Supplier:** [Bbiri Centre](https://www.bbiri-centre.com/)
 ---
 
 **Author:** Joel T. Muhanguzi  
