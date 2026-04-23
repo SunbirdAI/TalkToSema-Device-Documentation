@@ -234,6 +234,30 @@ The PCB includes an on-board buck-boost converter that:
 - **Solar:** Panel (≤20V) via onboard regulator
 - **Battery:** Internal lithium pack
 
+### SEMA Device Cost Budget
+
+| SN | Item Name | Description | Qty | Unit Cost (UGX) | Total Cost (UGX) |
+|----|-----------|-------------|-----|-----------------|------------------|
+| 1 | Lithium batteries | 2600mAh | 3 | 5,000 | 15,000 |
+| 2 | Microcontroller | Mega Pro Mini | 1 | 80,000 | 80,000 |
+| 3 | 4G Modem (inbuilt GPS) | SIM7600 | 1 | 140,000 | 140,000 |
+| 4 | Lithium charger | 3S charger | 1 | 20,000 | 20,000 |
+| 5 | Recording module | MAX9814 | 1 | 20,000 | 20,000 |
+| 6 | SD card reader | Read SD card | 1 | 10,000 | 10,000 |
+| 7 | SD card | 1GB | 1 | 15,000 | 15,000 |
+| 8 | Switch | Power device on or off | 1 | 3,000 | 3,000 |
+| 9 | RTC | DS3231 | 1 | 12,000 | 12,000 |
+| 10 | Voltage step-down 1 | Circuit step-down | 1 | 20,000 | 20,000 |
+| 11 | Switching transistor | TIP122 | 1 | 1,500 | 1,500 |
+| 12 | Switching resistor | 1K Ohm | 2 | 500 | 1,000 |
+| 13 | Power block diodes | 2N1001 | 2 | 1,000 | 2,000 |
+| 14 | Header pins | Component slot | 1 | 5,000 | 5,000 |
+| 15 | Glue stick | Assembly | 1 | 5,000 | 5,000 |
+| 16 | RTC battery | RTC power | 1 | 3,000 | 3,000 |
+| 17 | PCB | PCB board | 1 | 30,000 | 30,000 |
+| | | | | **Total (UGX)** | **382,500** |
+| | | | | **Total (USD)** | **~103.21** |
+
 ---
 
 **Author:** Joel T. Muhanguzi  
